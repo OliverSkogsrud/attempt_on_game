@@ -9,12 +9,14 @@ pygame.display.set_caption("game")
 
 clock = pygame.time.Clock()
 
+transparent = (0, 0, 0, 0)
+
 test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste den ned og legge den til
 #images
 Player = pygame.image.load("spaceship.jpg")
 small_player = pygame.transform.scale(Player, (100,100))
 bullet = pygame.image.load("bullet_pixel.png")
-
+small_bullet = pygame.transform.scale(bullet, (50,50))
 
 player_x = 300
 
@@ -36,11 +38,14 @@ while running:
             
                 
     
-    #keys = pygame.key.get_pressed()
-    #if keys[pygame.K_SPACE]:
-        #player_x + 1
-        #print("pressed space")
-    
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        screen.blit(small_bullet, (player_x, bullet_y))
+        bullet_y -= 10
+            
+
+        
+        
     
     screen.blit(small_player, (player_x ,400))
     
