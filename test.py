@@ -18,6 +18,7 @@ bullet = pygame.image.load("bullet_pixel.png")
 
 player_x = 300
 
+bullet_y = 400
 running = True
 
 while running:
@@ -32,7 +33,7 @@ while running:
                 player_x += 25
             if event.key == pygame.K_LEFT:
                 player_x -= 25
-            if event.key == pygame.K_SPACE:
+            
                 
     
     #keys = pygame.key.get_pressed()
