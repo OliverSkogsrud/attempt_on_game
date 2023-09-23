@@ -13,6 +13,7 @@ transparent = (0, 0, 0, 0)
 #variables
 player_x = 300
 bullet_y = 400
+  
 
 test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste den ned og legge den til
 #images
@@ -24,7 +25,7 @@ player_rect = small_player.get_rect(topleft = (player_x,400))
 bullet = pygame.image.load("bullet_pixel.png")
 small_bullet = pygame.transform.scale(bullet, (50,50))
 bullet_rect = small_bullet.get_rect(topleft = (player_x, bullet_y))
-
+bullet_copy = small_bullet.copy()
 
 running = True
 
@@ -47,9 +48,11 @@ while running:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
         screen.blit(small_bullet, (player_x, bullet_y))
-        bullet_y -= 200
-        if bullet_y == -1:
-            bullet_y == 400
+        bullet_y -= 100
+        screen.blit(bullet_copy, (player_x, bullet_y))
+        
+   
+        
 
     if keys[pygame.K_LEFT]:
         player_x -= 7
