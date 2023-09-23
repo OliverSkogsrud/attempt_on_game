@@ -30,18 +30,26 @@ while running:
             pygame.quit()
             exit()
         #Movement
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                player_x += 25
-            if event.key == pygame.K_LEFT:
-                player_x -= 25
+        #if event.type == pygame.KEYDOWN:
+            #if event.key == pygame.K_RIGHT:
+                #player_x += 25
+            #if event.key == pygame.K_LEFT:
+                #player_x -= 25
             
-                
+            
+            
     
+    #movement and bullet
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
         screen.blit(small_bullet, (player_x, bullet_y))
         bullet_y -= 10
+       
+    if keys[pygame.K_LEFT]:
+        player_x -= 7
+
+    if keys[pygame.K_RIGHT]:
+        player_x += 7
             
 
         
