@@ -2,6 +2,7 @@ import pygame
 import math
 import time
 import threading
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -14,7 +15,6 @@ clock = pygame.time.Clock()
 transparent = (0, 0, 0, 0)
 #variables
 player_x = 300
-
 
 
 
@@ -67,16 +67,18 @@ class Enemy:
 
 enemies = []
 
-def spawnenemy():
-    threading.Timer(1.0, spawnenemy).start()
-    enemy = Enemy(400,0)
-    enemies.append(enemy)
-
-
-spawnenemy()
 
 
 running = True
+
+def spawnenemy():
+    enemy = Enemy(random.randint(0,800),0)
+    enemies.append(enemy)
+    if running:
+        threading.Timer(1.0, spawnenemy).start()
+
+
+spawnenemy()
 
 while running:
     for event in pygame.event.get():
@@ -108,10 +110,10 @@ while running:
    
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player_x -= 5
+        player_x -= 7
 
     if keys[pygame.K_RIGHT]:
-        player_x += 5
+        player_x += 7
     
     screen.blit(small_player, (player_x ,400))
     
