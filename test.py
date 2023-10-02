@@ -12,7 +12,7 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((800, 600))
 
 
-pygame.display.set_caption("game")
+pygame.display.set_caption("Space Invaders")
 
 clock = pygame.time.Clock()
 
@@ -22,15 +22,20 @@ player_x = 300
 
 points = 0
 
+highscore = 0
+
 pygame.mixer.music.load("lavgutt.mp3")
-pygame.mixer.Channel(0).play(pygame.mixer.Sound("lavgutt.mp3"),loops=True)
+pygame.mixer.Channel(0).play(pygame.mixer.Sound("lavgutt.mp3"),loops=100000)
 
 hp_value = 10
 hp = pygame.font.Font(None,50)
-hp_text = hp.render("Hp "+ str(hp_value), False, "red")
+hp_text = hp.render("Hp: "+ str(hp_value), False, "red")
+
+high_font = pygame.font.Font(None,40)
+high_text = high_font.render("highscore: " + str(highscore), False, "red")
 
 test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste den ned og legge den til
-text = test_font.render("score  " + str(points), False, "red")
+text = test_font.render("score:  " + str(points), False, "red")
 #images
 #player
 Player = pygame.image.load("spaceship.jpg")
@@ -112,10 +117,10 @@ while running:
                 pygame.mixer.music.load("named.wav")
 
                 pygame.mixer.music.play()
-                bullet = Bullet(player_x + 50, 400)
+                bullet = Bullet(player_x + 50, 500)
                 bullets.append(bullet)
     player_rect.x = player_x
-    player_rect.y = 400
+    player_rect.y = 500
     #enemy = Enemy(400,0),
     #enemies.append(enemy)
 
@@ -148,8 +153,9 @@ while running:
             enemies.remove(enemy)
             hp_value -= 1 
 
-    hp_text = hp.render("Hp "+ str(hp_value),False, "red")
-    text = test_font.render("score  " + str(points), False, "red")
+    hp_text = hp.render("Hp: "+ str(hp_value),False, "red")
+    text = test_font.render("score:  " + str(points), False, "red")
+    high_text = high_font.render("highscore: " + str(highscore), False, "red")
 
 
     #movement and bullet
@@ -163,9 +169,12 @@ while running:
     
     if hp_value <= 0:
         reset()
-        
 
-    screen.blit(small_player, (player_x ,400))
+    if points >= highscore:
+        highscore = points
+        
+    screen.blit(high_text, (600, 200))
+    screen.blit(small_player, (player_x ,500))
     screen.blit(text,(400, 50))
     screen.blit(hp_text,(200,50))
     
