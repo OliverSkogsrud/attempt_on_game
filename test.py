@@ -51,7 +51,7 @@ class Enemy:
         self.image.fill((0,255,0))   
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
-        self.speed = 3
+        self.speed = 4
         self.angle = 300
         self.dx = self.speed * math.cos(self.angle) 
         self.dy = -self.speed * math.sin(self.angle)
@@ -162,10 +162,10 @@ while running:
    
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player_x -= 7
+        player_x -= 9
 
     if keys[pygame.K_RIGHT]:
-        player_x += 7
+        player_x += 9
     
     if hp_value <= 0:
         reset()
