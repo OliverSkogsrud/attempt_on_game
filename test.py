@@ -124,7 +124,6 @@ while running:
         player_x += 7
     
 
-
     screen.blit(small_player, (player_x ,400))
     screen.blit(text,(400, 50))
     
