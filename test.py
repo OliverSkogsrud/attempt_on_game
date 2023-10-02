@@ -6,6 +6,7 @@ import random
 from typing import List
 
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((800, 600))
 
 
@@ -18,6 +19,7 @@ transparent = (0, 0, 0, 0)
 player_x = 300
 
 points = 0
+
 
 test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste den ned og legge den til
 text = test_font.render(str(points), False, "red")
@@ -90,7 +92,9 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-
+                pygame.mixer.music.load("named.wav")
+                
+                pygame.mixer.music.play()
                 bullet = Bullet(player_x, 400)
                 bullets.append(bullet)
   
@@ -102,6 +106,8 @@ while running:
     for bullet in bullets:
         for enemy in enemies:
             if pygame.Rect.colliderect(bullet.rect, enemy.rect):
+                pygame.mixer.music.load("kill.wav")
+                pygame.mixer.music.play()
                 bullets.remove(bullet)
                 enemies.remove(enemy)
                 points += 1
