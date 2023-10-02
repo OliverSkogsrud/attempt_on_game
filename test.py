@@ -4,6 +4,8 @@ import time
 import threading
 import random
 from typing import List
+import sys
+import os
 
 pygame.init()
 pygame.mixer.init()
@@ -20,14 +22,20 @@ player_x = 300
 
 points = 0
 
+pygame.mixer.music.load("lavgutt.mp3")
+pygame.mixer.Channel(0).play(pygame.mixer.Sound("lavgutt.mp3"),loops=True)
+
+hp_value = 10
+hp = pygame.font.Font(None,50)
+hp_text = hp.render("Hp "+ str(hp_value), False, "red")
 
 test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste den ned og legge den til
-text = test_font.render(str(points), False, "red")
+text = test_font.render("score  " + str(points), False, "red")
 #images
 #player
 Player = pygame.image.load("spaceship.jpg")
 small_player = pygame.transform.scale(Player, (100,100))
-player_rect = small_player.get_rect(topleft = (player_x,400))
+player_rect = small_player.get_rect(center = (player_x,400))
 #bullet
 
 
@@ -83,6 +91,15 @@ def spawnenemy():
         threading.Timer(1.0, spawnenemy).start()
 
 
+def reset():
+    global points
+    global hp_value
+    points = 0
+    enemies.clear()
+    hp_value = 10
+
+    
+
 
 spawnenemy()
 
@@ -93,13 +110,16 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 pygame.mixer.music.load("named.wav")
-                
+
                 pygame.mixer.music.play()
-                bullet = Bullet(player_x, 400)
+                bullet = Bullet(player_x + 50, 400)
                 bullets.append(bullet)
-  
+    player_rect.x = player_x
+    player_rect.y = 400
     #enemy = Enemy(400,0),
     #enemies.append(enemy)
+
+    print(player_rect)
 
     screen.fill((0,75,220))
 
@@ -107,17 +127,29 @@ while running:
         for enemy in enemies:
             if pygame.Rect.colliderect(bullet.rect, enemy.rect):
                 pygame.mixer.music.load("kill.wav")
+                pygame.mixer.music.set_volume(20.0)
                 pygame.mixer.music.play()
                 bullets.remove(bullet)
                 enemies.remove(enemy)
                 points += 1
-                text = test_font.render(str(points), False, "red")
+                
+
         bullet.update()
         bullet.draw()
 
+    
     for enemy in enemies:
         enemy.update()
-        enemy.draw()   
+        enemy.draw()
+        if pygame.Rect.colliderect(enemy.rect, player_rect):
+            enemies.remove(enemy)
+            hp_value -= 1
+        if enemy.rect.y >= 610:
+            enemies.remove(enemy)
+            hp_value -= 1 
+
+    hp_text = hp.render("Hp "+ str(hp_value),False, "red")
+    text = test_font.render("score  " + str(points), False, "red")
 
 
     #movement and bullet
@@ -129,9 +161,13 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_x += 7
     
+    if hp_value <= 0:
+        reset()
+        
 
     screen.blit(small_player, (player_x ,400))
     screen.blit(text,(400, 50))
+    screen.blit(hp_text,(200,50))
     
     pygame.display.flip()
 
