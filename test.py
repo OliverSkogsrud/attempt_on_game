@@ -38,11 +38,10 @@ test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste de
 text = test_font.render("score:  " + str(points), False, "red")
 #images
 #player
-Player = pygame.image.load("spaceship.jpg")
+Player = pygame.image.load("spaceship2.png")
 small_player = pygame.transform.scale(Player, (100,100))
 player_rect = small_player.get_rect(center = (player_x,400))
 #bullet
-
 
 
 class Enemy:
@@ -102,6 +101,8 @@ def reset():
     points = 0
     enemies.clear()
     hp_value = 10
+    pygame.mixer.music.load("Death.wav")
+    pygame.mixer.music.play()
 
     
 
@@ -124,7 +125,6 @@ while running:
     #enemy = Enemy(400,0),
     #enemies.append(enemy)
 
-    print(player_rect)
 
     screen.fill((0,75,220))
 
