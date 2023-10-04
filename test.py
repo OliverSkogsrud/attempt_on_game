@@ -41,6 +41,7 @@ text = test_font.render("score:  " + str(points), False, "red")
 Player = pygame.image.load("spaceship2.png")
 small_player = pygame.transform.scale(Player, (100,100))
 player_rect = small_player.get_rect(center = (player_x,400))
+
 #bullet
 
 
@@ -126,7 +127,7 @@ while running:
     #enemies.append(enemy)
 
 
-    screen.fill((0,75,220))
+    screen.fill((0,75,200))
 
     for bullet in bullets:
         for enemy in enemies:
