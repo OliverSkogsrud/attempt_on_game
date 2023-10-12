@@ -4,7 +4,7 @@ import time
 import threading
 import random
 from typing import List
-import sys
+import sys, os
 import os
 
 pygame.init()
@@ -18,13 +18,20 @@ clock = pygame.time.Clock()
 
 transparent = (0, 0, 0, 0)
 #variables
+
 player_x = 300
 
 points = 0
 
 highscore = 0
 
-pygame.mixer.music.load("lavgutt.mp3")
+if getattr(sys, 'frozen', False):
+    application_path = sys._MEIPASS
+else:
+    application_path = os.path.dirname(os.path.abspath(__file__))
+
+pygame.mixer.music.load(os.path.join(application_path, "lavgutt.mp3"))
+
 pygame.mixer.Channel(0).play(pygame.mixer.Sound("lavgutt.mp3"),loops=100000)
 
 hp_value = 10
@@ -38,7 +45,7 @@ test_font = pygame.font.Font(None, 50)#hvis jeg skal ha en font må jeg laste de
 text = test_font.render("score:  " + str(points), False, "red")
 #images
 #player
-Player = pygame.image.load("spaceship2.png")
+Player = pygame.image.load(os.path.join(application_path, "spaceship2.png"))
 small_player = pygame.transform.scale(Player, (100,100))
 player_rect = small_player.get_rect(center = (player_x,400))
 
@@ -102,7 +109,7 @@ def reset():
     points = 0
     enemies.clear()
     hp_value = 10
-    pygame.mixer.music.load("Death.wav")
+    pygame.mixer.music.load(os.path.join(application_path, "death.wav"))
     pygame.mixer.music.play()
 
     
@@ -116,7 +123,7 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                pygame.mixer.music.load("named.wav")
+                pygame.mixer.music.load(os.path.join(application_path, "named.wav"))
 
                 pygame.mixer.music.play()
                 bullet = Bullet(player_x + 50, 500)
@@ -132,7 +139,7 @@ while running:
     for bullet in bullets:
         for enemy in enemies:
             if pygame.Rect.colliderect(bullet.rect, enemy.rect):
-                pygame.mixer.music.load("kill.wav")
+                pygame.mixer.music.load(os.path.join(application_path, "kill.wav"))
                 pygame.mixer.music.set_volume(20.0)
                 pygame.mixer.music.play()
                 bullets.remove(bullet)
