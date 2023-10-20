@@ -32,7 +32,7 @@ else:
 
 pygame.mixer.music.load(os.path.join(application_path, "lavgutt.mp3"))
 
-pygame.mixer.Channel(0).play(pygame.mixer.Sound("lavgutt.mp3"),loops=100000)
+pygame.mixer.Channel(0).play(pygame.mixer.Sound((os.path.join(application_path, "lavgutt.mp3"))),loops=100000)
 
 hp_value = 10
 hp = pygame.font.Font(None,50)
